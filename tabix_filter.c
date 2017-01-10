@@ -16,8 +16,6 @@
 typedef struct {
     kstring_t *input_path;
     kstring_t *variant_path;
-    bool print_header;
-    bool only_header;
     int var_column;
 } args_t;
 
@@ -29,8 +27,6 @@ typedef struct {
 
 static struct option long_options[] = {
     {"input", required_argument, NULL, 'i'},
-    {"print-header", no_argument, NULL, 'h'},
-    {"only-header", no_argument, NULL, 'H'},
     {"variants", required_argument, NULL, 'V'},
     {"var-column", required_argument, NULL, 'H'},
     {NULL, 0, NULL, 0}
@@ -42,8 +38,6 @@ void usage() {
             "\nQuery format:\n"
             "  'CHROM:POS;VAR' e.g. 'Y:2655034;C'\n"
             "\nOptions:\n"
-            "  -h --print-header        Print also the header lines\n"
-            "  -H --only-header         Print only the header lines\n"
             "  -V --variants FILE       Restrict to variants listed in the file\n"
             "                           Variants file should be a whitespace-delimeted file with CHROM, POS, VAR columns\n"
             "                           Alternatively, location of VAR column can be set with `--var-column` argument\n"
@@ -198,13 +192,11 @@ int main(int argc, char *argv[]) {
     args_t args = {
         .input_path = KS_ALLOC,
         .variant_path = KS_ALLOC,
-        .print_header = false,
-        .only_header = false,
         .var_column = 3
     };
 
     while(true) {
-        int opt = getopt_long(argc, argv, "i:V:v:hH", long_options, NULL);
+        int opt = getopt_long(argc, argv, "i:V:v:", long_options, NULL);
         if (opt == -1) break;
 
         switch (opt) {
@@ -213,13 +205,6 @@ int main(int argc, char *argv[]) {
             break;
         case 'v':
             args.var_column = strtol(optarg, NULL, 10);
-            break;
-        case 'h':
-            args.print_header = true;
-            break;
-        case 'H':
-            args.print_header = true;
-            args.only_header = true;
             break;
         default:
             usage();
