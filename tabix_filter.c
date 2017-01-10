@@ -12,6 +12,8 @@
 #define BUFSIZE 2048
 #define KS_ALLOC (kstring_t *)(calloc(1, sizeof(kstring_t)))
 
+#define FILE_NOT_FOUND 2
+
 
 typedef struct {
     kstring_t *input_path;
@@ -61,7 +63,7 @@ size_t count_lines(char *file_name) {
   FILE *f = fopen(file_name, "r");
   if (!f) {
       error("Could not open variant file %s\n", file_name);
-      exit(EXIT_FAILURE);
+      exit(FILE_NOT_FOUND);
   }
   char ch;
   size_t n_lines = 0;
@@ -111,10 +113,14 @@ error:
 
 query_t *parse_queries_file(size_t n_queries, kstring_t *variant_path) {
     query_t *queries = (query_t *)calloc(n_queries, sizeof(query_t));
+    if (strcasecmp(variant_path->s + variant_path->l - 4, ".tsv") != 0) {
+        error("The variant file %s does not appear to be a .tsv file\n", variant_path->s);
+        exit(EXIT_FAILURE);
+    }
     FILE *variant_file = fopen(variant_path->s, "r");
     if (!variant_file) {
         error("Could not open variant file %s\n", variant_path);
-        exit(EXIT_FAILURE);
+        exit(FILE_NOT_FOUND);
     }
 
     int n_columns;
@@ -157,10 +163,16 @@ query_t *parse_queries_file(size_t n_queries, kstring_t *variant_path) {
 int get_tabix_lines(char *index_path, size_t len, query_t *queries, size_t column) {
 
     htsFile *index_file = hts_open(index_path, "r");
-    if (!index_file) error("Could not read %s", index_path);
+    if (!index_file) { 
+        error("Could not read %s\n", index_path);
+        exit(FILE_NOT_FOUND);
+    }
 
     tbx_t *tabix_index = tbx_index_load(index_path);
-    if (!tabix_index) error("Could not load .tbi index of %s\n", index_path);
+    if (!tabix_index) {
+        error("Could not load .tbi index of %s\n", index_path);
+        exit(FILE_NOT_FOUND);
+    }
 
     kstring_t *str = KS_ALLOC;
 
