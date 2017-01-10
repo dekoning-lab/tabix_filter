@@ -10,7 +10,7 @@ compiler:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install htslib samtools; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt install htslib-devel samtools; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get install htslib-devel samtools; fi
 
 script:
   make && make test && make test_clean
