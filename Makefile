@@ -29,4 +29,6 @@ test_cmd: test/exac_cadd.tsv.gz
 test_file: test/exac_cadd.tsv.gz
 	sh test/test_file.sh
 
+test_clean:
+	rm test/exac_cadd.tsv.gz test/exac_cadd.tsv.gz
 
