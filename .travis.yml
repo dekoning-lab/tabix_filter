@@ -13,4 +13,4 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt install htslib-devel samtools; fi
 
 script:
-  make && make test
+  make && make test && make test_clean
