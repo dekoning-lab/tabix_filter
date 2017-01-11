@@ -1,5 +1,7 @@
 # Tabix-filter
 
+[![Build Status](https://travis-ci.org/dekoning-lab/tabix_filter.svg?branch=master)](https://travis-ci.org/dekoning-lab/tabix_filter)
+
 This is a modified version of `tabix` query, which allows to filter SNP by position _and_ by alternative variants.
 It can be used as a part of a SNP annotation pipeline which includes multiple variants in the same locus.
 
