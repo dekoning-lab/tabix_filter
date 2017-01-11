@@ -26,4 +26,4 @@ script:
   - ./configure && make
   - sudo make install
   - popd
-  - make && make test && make_test_clean
+  - make && make test && make test_clean
