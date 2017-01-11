@@ -3,3 +3,4 @@
 test/*.tsv.gz*
 *.dSYM/
 tabix_filter
+tabix_filter_debug_osx
