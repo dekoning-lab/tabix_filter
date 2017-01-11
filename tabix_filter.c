@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <string.h>
+#include <strings.h>
 #include <math.h>
 #include <stdbool.h>
 #include <getopt.h>
