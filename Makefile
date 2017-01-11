@@ -1,5 +1,5 @@
-CFLAGS=-Wall -g
-ASANFLAGS=-O1 -fsanitize=address -fno-omit-frame-pointer
+CFLAGS=-Wall -std=c99
+ASANFLAGS=-g -O1 -fsanitize=address -fno-omit-frame-pointer
 INCPATH=./include
 LIBPATH=/usr/local/lib
 LIBS=-lhts -lm
@@ -7,7 +7,7 @@ LIBS=-lhts -lm
 all: tabix_filter
 
 tabix_filter: tabix_filter.c
-		${CC} $^ -Wall -I${INCPATH} -L${LIBPATH} ${LIBS} -o $@
+		${CC} $^ ${CFLAGS} -I${INCPATH} -L${LIBPATH} ${LIBS} -o $@
 
 tabix_filter_debug_osx: tabix_filter.c
 		${CC} $^ ${CFLAGS} ${ASANFLAGS} -I${INCPATH} -L${LIBPATH} ${LIBS} -o $@
