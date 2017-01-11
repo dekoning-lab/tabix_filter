@@ -20,6 +20,10 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib; fi
 
 script:
-  git clone https://github.com/samtools/htslib.git
-  pushd htslib && autoheader && autoconf && ./configure && make && sudo make install && popd
-  make && make test && make test_clean
+  - git clone https://github.com/samtools/htslib.git
+  - pushd htslib
+  - autoheader && autoconf
+  - ./configure && make
+  - sudo make install
+  - popd
+  - make && make test && make_test_clean
