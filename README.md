@@ -70,7 +70,7 @@ This is the example used in `test/test_file.sh`:
 curl 'http://krishna.gs.washington.edu/download/CADD/v1.3/ExAC_r0.3.tsv.gz' -o exac_cadd.tsv.gz
 
 # Create an index with regular tabix:
-tabix -s1 -b2 -e2 exac_cadd.tsv.gg
+tabix -s1 -b2 -e2 exac_cadd.tsv.gz
 
 # Write some data into test_query.tsv file:
 cat <<EOF > test_query.tsv
